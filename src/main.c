@@ -12,6 +12,7 @@ int main(void){
     while (1)
     {
         OLED_ShowSignedNum(2, 1, timer_count, 4);
+        OLED_ShowSignedNum(3, 1, TImer_GetCounter(), 4);
     }
 }
 
