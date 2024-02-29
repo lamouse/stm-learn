@@ -1,5 +1,5 @@
 #include <stm32f10x.h>
-#include <servo.h>
+#include <motor.h>
 #include <OLED.h>
 #include <delay.h>
 #include <key.h>
@@ -7,27 +7,28 @@
 int main(void){
     OLED_Init();
     //OLED_ShowChar(1, 1, 'A');
-    OLED_ShowString(1, 1, "angle");
-    servo_init();
+    OLED_ShowString(1, 1, "speed");
+    Motor_init();
     void Key_Init();
-    uint8_t key_num = 0;
-
-    float angle = 0.f;
+    uint8_t key_num;
+    uint16_t key_down_count = 0;
+    int8_t seppd = 0;
     while (1)
     {
         key_num = Key_GetNum();
 
         if(key_num == 1){
-            OLED_ShowNum(3, 1, key_num, 3);
-            angle += 30;
-            if (angle > 180)
+            key_down_count++;
+            OLED_ShowNum(3, 1, key_down_count, 4);
+            seppd += 20;
+            if (seppd > 100)
             {
-                angle = 0;
+                seppd = -100;
             }
-
-            servo_setAngle(angle);
         }
-        OLED_ShowNum(2, 1, angle, 3);
+
+        Motor_SetSpeed(seppd);
+        OLED_ShowSignedNum(2, 1, seppd, 3);
 
     }
 }
