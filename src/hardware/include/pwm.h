@@ -2,5 +2,6 @@
 #define PWM_H_
 #include <stm32f10x.h>
 void PWM_Init(void);
-void set_compare(uint16_t compare);
+void PWM_SetCompare1(uint16_t Compare);
+void PWM_SetPrescaler(uint16_t Prescaler);
 #endif
